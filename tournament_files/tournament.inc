@@ -3,6 +3,7 @@
 
 char players[12][];  //Steam IDs of connected players
 char client[12][];  //Client index
+int readystatus[] = 0;
 int players_connected[12] = {0, 0, 0, 0,
 							 0, 0, 0, 0,
 							 0, 0, 0, 0,
@@ -19,6 +20,7 @@ public Plugin myinfo =
 
 public void OnPluginStart(){
 	PrintToServer("Austin CSGO Tournament Plugin has launched.");
+	RegConsoleCmd("sm_ready", AddReadyStatus, "Add ready status for client;
 	
 }
 
@@ -37,6 +39,7 @@ pubic void OnClientDisconnect(client){
 	
 	players[i][] = "";
 	client[i][] = "";
+	readystatus[i] = 0;
 	players_connected[i] = 0;
 	
 }
@@ -49,4 +52,21 @@ private void StorePlayerInfo(client, id){
 	client[i][] = client;
 	players_connected[i] = 1;
 	
+}
+
+public void AddReadyStatus(client, args){
+	
+	int i = 0;
+	while(clients[i][] != client){i++;}
+	
+	readystatus[i] = 1;
+	
+	i = 0;
+	for(n=0;n<11;n++){
+		if(readystatus[i]=1){i++;}
+	}
+	if(i>9){
+		PrintToServer("Ready status has fired.");
+		
+	}
 }
